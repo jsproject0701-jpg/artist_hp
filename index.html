@@ -1,0 +1,957 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Yuki Kono — Bassoonist & Concert Director</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Noto+Serif+JP:wght@300;400;600&family=Josefin+Sans:wght@100;300;400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --wine: #6B1A2A;
+    --wine-deep: #3D0A14;
+    --wine-light: #8B2E3F;
+    --rose: #C4637A;
+    --rose-pale: #E8A8B5;
+    --gold: #C9A96E;
+    --gold-light: #E8D5A8;
+    --cream: #F7F0E8;
+    --cream-dark: #EDE3D5;
+    --text: #1A0A0F;
+    --text-light: #5A3040;
+    --white: #FEFCF8;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Noto Serif JP', serif;
+    background: var(--white);
+    color: var(--text);
+    overflow-x: hidden;
+  }
+
+  /* ---- CURSOR ---- */
+  *, *::before, *::after { cursor: none; }
+  .cursor {
+    position: fixed; width: 10px; height: 10px;
+    background: var(--gold); border-radius: 50%;
+    pointer-events: none; z-index: 9999;
+    transform: translate(-50%, -50%);
+    transition: transform 0.15s ease, width 0.2s, height 0.2s, opacity 0.2s;
+    mix-blend-mode: multiply;
+  }
+  .cursor-ring {
+    position: fixed; width: 36px; height: 36px;
+    border: 1px solid var(--wine); border-radius: 50%;
+    pointer-events: none; z-index: 9998;
+    transform: translate(-50%, -50%);
+    transition: transform 0.4s cubic-bezier(.16,1,.3,1), opacity 0.3s;
+  }
+
+  /* ---- NAVIGATION ---- */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 24px 60px;
+    background: linear-gradient(to bottom, rgba(254,252,248,0.95), transparent);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid rgba(107,26,42,0.08);
+    transition: all 0.4s;
+  }
+  nav.scrolled {
+    background: rgba(254,252,248,0.97);
+    border-bottom-color: rgba(107,26,42,0.15);
+    padding: 16px 60px;
+  }
+  .nav-logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 22px; font-weight: 300; letter-spacing: 0.12em;
+    color: var(--wine-deep); text-decoration: none;
+    font-style: italic;
+  }
+  .nav-links {
+    display: flex; gap: 36px; list-style: none;
+  }
+  .nav-links a {
+    font-family: 'Josefin Sans', sans-serif;
+    font-size: 10px; letter-spacing: 0.25em; text-transform: uppercase;
+    color: var(--text-light); text-decoration: none;
+    transition: color 0.3s;
+    padding-bottom: 2px;
+    border-bottom: 1px solid transparent;
+    transition: color 0.3s, border-color 0.3s;
+  }
+  .nav-links a:hover { color: var(--wine); border-bottom-color: var(--gold); }
+
+  /* ---- HERO ---- */
+  #hero {
+    min-height: 100vh;
+    display: grid; grid-template-columns: 1fr 1fr;
+    position: relative; overflow: hidden;
+  }
+  .hero-visual {
+    position: relative; background: var(--wine-deep);
+    overflow: hidden;
+  }
+  .hero-visual::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: 
+      radial-gradient(ellipse at 30% 60%, rgba(201,169,110,0.12) 0%, transparent 60%),
+      radial-gradient(ellipse at 80% 20%, rgba(139,46,63,0.4) 0%, transparent 50%);
+  }
+  .hero-pattern {
+    position: absolute; inset: 0; opacity: 0.04;
+    background-image: repeating-linear-gradient(
+      45deg,
+      var(--gold) 0, var(--gold) 1px,
+      transparent 0, transparent 50%
+    );
+    background-size: 20px 20px;
+  }
+  .hero-instrument {
+    position: absolute; inset: 0;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 280px; line-height: 1; opacity: 0.06;
+    color: var(--gold);
+    font-family: 'Cormorant Garamond', serif;
+    user-select: none;
+    animation: floatAnim 8s ease-in-out infinite;
+  }
+  @keyframes floatAnim {
+    0%, 100% { transform: translateY(0) rotate(-3deg); }
+    50% { transform: translateY(-20px) rotate(-3deg); }
+  }
+  .hero-tagline-jp {
+    position: absolute; bottom: 48px; left: 48px;
+    font-family: 'Noto Serif JP', serif;
+    font-size: 11px; font-weight: 300; letter-spacing: 0.3em;
+    color: rgba(232,213,168,0.5);
+    writing-mode: vertical-rl;
+  }
+  .hero-content {
+    display: flex; flex-direction: column;
+    justify-content: center; padding: 120px 80px 80px 70px;
+    position: relative;
+  }
+  .hero-content::before {
+    content: '';
+    position: absolute; top: 0; left: 0; bottom: 0;
+    width: 1px; background: linear-gradient(to bottom, transparent, var(--gold), transparent);
+    opacity: 0.4;
+  }
+  .hero-eyebrow {
+    font-family: 'Josefin Sans', sans-serif;
+    font-size: 10px; letter-spacing: 0.4em; text-transform: uppercase;
+    color: var(--rose); margin-bottom: 24px;
+    opacity: 0; animation: fadeUp 0.8s 0.3s forwards;
+  }
+  .hero-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(52px, 6vw, 88px);
+    font-weight: 300; line-height: 1.05;
+    color: var(--wine-deep); margin-bottom: 8px;
+    opacity: 0; animation: fadeUp 0.8s 0.5s forwards;
+  }
+  .hero-name em { font-style: italic; color: var(--wine); display: block; }
+  .hero-kanji {
+    font-family: 'Noto Serif JP', serif;
+    font-size: 18px; font-weight: 300; letter-spacing: 0.3em;
+    color: var(--text-light); margin-bottom: 8px;
+    opacity: 0; animation: fadeUp 0.8s 0.65s forwards;
+  }
+  .hero-role {
+    font-family: 'Josefin Sans', sans-serif;
+    font-size: 12px; letter-spacing: 0.35em; text-transform: uppercase;
+    color: var(--text-light); margin-bottom: 48px;
+    opacity: 0; animation: fadeUp 0.8s 0.7s forwards;
+  }
+  .hero-message {
+    font-size: 15px; line-height: 2; color: var(--text-light);
+    max-width: 440px; font-weight: 300;
+    border-left: 2px solid var(--gold);
+    padding-left: 24px; margin-bottom: 56px;
+    opacity: 0; animation: fadeUp 0.8s 0.9s forwards;
+  }
+  .hero-cta {
+    display: flex; gap: 20px; flex-wrap: wrap;
+    opacity: 0; animation: fadeUp 0.8s 1.1s forwards;
+  }
+  .btn-primary {
+    display: inline-block;
+    padding: 14px 36px;
+    background: var(--wine); color: var(--gold-light);
+    font-family: 'Josefin Sans', sans-serif;
+    font-size: 10px; letter-spacing: 0.3em; text-transform: uppercase;
+    text-decoration: none; border: 1px solid var(--wine);
+    transition: all 0.35s;
+  }
+  .btn-primary:hover { background: var(--wine-deep); border-color: var(--wine-deep); }
+  .btn-outline {
+    display: inline-block;
+    padding: 14px 36px;
+    background: transparent; color: var(--wine);
+    font-family: 'Josefin Sans', sans-serif;
+    font-size: 10px; letter-spacing: 0.3em; text-transform: uppercase;
+    text-decoration: none; border: 1px solid var(--wine);
+    transition: all 0.35s;
+  }
+  .btn-outline:hover { background: var(--wine); color: var(--gold-light); }
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ---- SECTION BASE ---- */
+  section {
+    padding: 120px 0;
+  }
+  .container { max-width: 1200px; margin: 0 auto; padding: 0 60px; }
+  .section-header {
+    display: flex; align-items: center; gap: 24px;
+    margin-bottom: 72px;
+  }
+  .section-label {
+    font-family: 'Josefin Sans', sans-serif;
+    font-size: 10px; letter-spacing: 0.4em; text-transform: uppercase;
+    color: var(--rose);
+  }
+  .section-line { flex: 1; height: 1px; background: linear-gradient(to right, var(--gold), transparent); }
+  .section-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(36px, 4vw, 56px); font-weight: 300;
+    color: var(--wine-deep); line-height: 1.1;
+  }
+  .section-title em { font-style: italic; color: var(--wine); }
+
+  /* ---- NEWS ---- */
+  #news { background: var(--cream); }
+  .news-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px; }
+  .news-card {
+    padding: 36px; background: var(--white);
+    border-top: 3px solid var(--gold);
+    transition: transform 0.3s, box-shadow 0.3s;
+  }
+  .news-card:hover { transform: translateY(-6px); box-shadow: 0 20px 60px rgba(107,26,42,0.1); }
+  .news-date {
+    font-family: 'Josefin Sans', sans-serif;
+    font-size: 10px; letter-spacing: 0.25em;
+    color: var(--rose); margin-bottom: 16px;
+  }
+  .news-card h3 { font-size: 16px; line-height: 1.6; color: var(--wine-deep); margin-bottom: 12px; font-weight: 400; }
+  .news-card p { font-size: 13px; line-height: 1.9; color: var(--text-light); font-weight: 300; }
+
+  /* ---- BIOGRAPHY ---- */
+  #biography { background: var(--white); }
+  .bio-layout { display: grid; grid-template-columns: 1fr 2fr; gap: 100px; align-items: start; }
+  .bio-portrait {
+    position: relative;
+  }
+  .bio-portrait-frame {
+    width: 100%; aspect-ratio: 3/4;
+    background: linear-gradient(135deg, var(--wine-deep) 0%, var(--wine) 60%, var(--rose) 100%);
+    position: relative; overflow: hidden;
+  }
+  .bio-portrait-frame::before {
+    content: 'Yuki\AKono';
+    white-space: pre;
+    position: absolute; inset: 0;
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 52px; font-weight: 300; color: rgba(255,255,255,0.08);
+    text-align: center; line-height: 1.2;
+  }
+  .bio-portrait-accent {
+    position: absolute; bottom: -20px; right: -20px;
+    width: 80%; height: 80%;
+    border: 1px solid var(--gold); pointer-events: none;
+  }
+  .bio-portrait-label {
+    position: absolute; bottom: -52px; left: 0;
+    font-family: 'Josefin Sans', sans-serif;
+    font-size: 9px; letter-spacing: 0.3em;
+    color: var(--gold); text-transform: uppercase;
+  }
+  .bio-text { padding-top: 8px; }
+  .bio-text p {
+    font-size: 15px; line-height: 2.1;
+    color: var(--text-light); margin-bottom: 24px; font-weight: 300;
+  }
+  .bio-text p:first-child { font-size: 17px; color: var(--text); }
+  .bio-details {
+    margin-top: 48px; display: grid; grid-template-columns: 1fr 1fr; gap: 24px;
+    padding-top: 48px; border-top: 1px solid var(--cream-dark);
+  }
+  .bio-detail-item { }
+  .bio-detail-label {
+    font-family: 'Josefin Sans', sans-serif;
+    font-size: 9px; letter-spacing: 0.3em; text-transform: uppercase;
+    color: var(--rose); margin-bottom: 6px;
+  }
+  .bio-detail-value { font-size: 14px; color: var(--text); line-height: 1.6; font-weight: 300; }
+
+  /* ---- EVENTS ---- */
+  #events { background: var(--wine-deep); color: var(--cream); }
+  #events .section-title { color: var(--gold-light); }
+  #events .section-label { color: var(--rose-pale); }
+  #events .section-line { background: linear-gradient(to right, var(--gold), transparent); }
+  .events-list { display: flex; flex-direction: column; gap: 0; }
+  .event-item {
+    display: grid; grid-template-columns: 140px 1fr auto;
+    gap: 48px; align-items: center;
+    padding: 36px 0;
+    border-bottom: 1px solid rgba(201,169,110,0.15);
+    transition: all 0.3s;
+  }
+  .event-item:first-child { border-top: 1px solid rgba(201,169,110,0.15); }
+  .event-item:hover { padding-left: 16px; border-bottom-color: rgba(201,169,110,0.4); }
+  .event-date-block { }
+  .event-month {
+    font-family: 'Josefin Sans', sans-serif;
+    font-size: 10px; letter-spacing: 0.3em; text-transform: uppercase;
+    color: var(--rose-pale); margin-bottom: 4px;
+  }
+  .event-day {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 52px; font-weight: 300; line-height: 1;
+    color: var(--gold);
+  }
+  .event-info h3 { font-size: 18px; font-weight: 400; margin-bottom: 8px; color: var(--cream); }
+  .event-info p { font-size: 13px; font-weight: 300; color: rgba(232,213,168,0.6); line-height: 1.7; }
+  .event-venue {
+    font-family: 'Josefin Sans', sans-serif;
+    font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--rose-pale); text-align: right; white-space: nowrap;
+  }
+
+  /* ---- PROJECTS ---- */
+  #projects { background: var(--cream); }
+  .projects-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 40px; }
+  .project-card {
+    position: relative; overflow: hidden;
+    background: var(--white); padding: 48px;
+    border-left: 4px solid var(--gold);
+    transition: all 0.35s;
+  }
+  .project-card:hover { border-left-color: var(--wine); transform: translateX(6px); }
+  .project-number {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 72px; font-weight: 300;
+    color: var(--cream-dark); position: absolute;
+    top: -8px; right: 32px; line-height: 1;
+    pointer-events: none;
+  }
+  .project-tag {
+    font-family: 'Josefin Sans', sans-serif;
+    font-size: 9px; letter-spacing: 0.3em; text-transform: uppercase;
+    color: var(--rose); margin-bottom: 16px; display: block;
+  }
+  .project-card h3 { font-size: 20px; font-weight: 400; color: var(--wine-deep); margin-bottom: 16px; line-height: 1.4; }
+  .project-card p { font-size: 13px; line-height: 1.9; color: var(--text-light); font-weight: 300; }
+
+  /* ---- ARTICLES ---- */
+  #articles { background: var(--white); }
+  .articles-list { display: flex; flex-direction: column; gap: 0; }
+  .article-item {
+    display: flex; align-items: baseline; gap: 32px;
+    padding: 28px 0;
+    border-bottom: 1px solid var(--cream-dark);
+    text-decoration: none; color: inherit;
+    transition: all 0.3s;
+    group: true;
+  }
+  .article-item:hover .article-title { color: var(--wine); }
+  .article-item:hover { padding-left: 12px; }
+  .article-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 18px; color: var(--gold); flex-shrink: 0; width: 32px;
+  }
+  .article-meta {
+    font-family: 'Josefin Sans', sans-serif;
+    font-size: 9px; letter-spacing: 0.25em; text-transform: uppercase;
+    color: var(--rose); flex-shrink: 0; min-width: 100px;
+  }
+  .article-title { font-size: 15px; color: var(--text); flex: 1; line-height: 1.6; transition: color 0.3s; }
+  .article-arrow { color: var(--gold); font-size: 18px; flex-shrink: 0; opacity: 0; transition: opacity 0.3s, transform 0.3s; }
+  .article-item:hover .article-arrow { opacity: 1; transform: translateX(4px); }
+
+  /* ---- CONTACT ---- */
+  #contact {
+    background: linear-gradient(135deg, var(--wine-deep) 0%, var(--wine) 100%);
+    position: relative; overflow: hidden;
+  }
+  #contact::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: radial-gradient(ellipse at 20% 80%, rgba(201,169,110,0.08) 0%, transparent 60%);
+  }
+  #contact .section-title { color: var(--gold-light); }
+  #contact .section-label { color: var(--rose-pale); }
+  #contact .section-line { background: linear-gradient(to right, var(--gold), transparent); }
+  .contact-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: start; }
+  .contact-message { color: rgba(247,240,232,0.8); font-size: 15px; line-height: 2; font-weight: 300; }
+  .contact-message strong { color: var(--gold-light); font-weight: 400; }
+  .contact-form { display: flex; flex-direction: column; gap: 24px; }
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .form-group { display: flex; flex-direction: column; gap: 8px; }
+  .form-group label {
+    font-family: 'Josefin Sans', sans-serif;
+    font-size: 9px; letter-spacing: 0.3em; text-transform: uppercase;
+    color: var(--rose-pale);
+  }
+  .form-group input,
+  .form-group textarea,
+  .form-group select {
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(201,169,110,0.2);
+    padding: 14px 16px; font-size: 14px;
+    color: var(--cream); font-family: 'Noto Serif JP', serif; font-weight: 300;
+    outline: none; transition: border-color 0.3s;
+    -webkit-appearance: none;
+  }
+  .form-group input:focus,
+  .form-group textarea:focus,
+  .form-group select:focus { border-color: var(--gold); }
+  .form-group select option { background: var(--wine-deep); }
+  .form-group textarea { resize: vertical; min-height: 120px; }
+  ::placeholder { color: rgba(232,213,168,0.3); }
+  .btn-submit {
+    padding: 16px 48px; background: var(--gold);
+    color: var(--wine-deep); font-family: 'Josefin Sans', sans-serif;
+    font-size: 10px; letter-spacing: 0.35em; text-transform: uppercase;
+    border: none; font-weight: 400; align-self: flex-start;
+    transition: all 0.3s; cursor: none;
+  }
+  .btn-submit:hover { background: var(--gold-light); }
+
+  /* ---- SNS ---- */
+  #sns { background: var(--cream); }
+  .sns-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; }
+  .sns-card {
+    padding: 40px 32px; background: var(--white);
+    display: flex; flex-direction: column; gap: 16px;
+    text-decoration: none; color: inherit;
+    border-bottom: 3px solid transparent;
+    transition: all 0.35s;
+  }
+  .sns-card:hover { border-bottom-color: var(--wine); transform: translateY(-4px); box-shadow: 0 16px 48px rgba(107,26,42,0.08); }
+  .sns-icon { font-size: 28px; }
+  .sns-name {
+    font-family: 'Josefin Sans', sans-serif;
+    font-size: 11px; letter-spacing: 0.3em; text-transform: uppercase;
+    color: var(--rose);
+  }
+  .sns-handle { font-size: 16px; color: var(--wine-deep); }
+  .sns-desc { font-size: 12px; color: var(--text-light); line-height: 1.7; font-weight: 300; }
+
+  /* ---- FOOTER ---- */
+  footer {
+    background: var(--wine-deep); color: rgba(232,213,168,0.5);
+    text-align: center; padding: 48px 60px;
+  }
+  footer .footer-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 28px; font-weight: 300; font-style: italic;
+    color: rgba(201,169,110,0.6); margin-bottom: 16px; display: block;
+  }
+  footer p { font-family: 'Josefin Sans', sans-serif; font-size: 9px; letter-spacing: 0.25em; }
+
+  /* ---- REVEAL ANIMATION ---- */
+  .reveal {
+    opacity: 0; transform: translateY(32px);
+    transition: opacity 0.9s cubic-bezier(.16,1,.3,1), transform 0.9s cubic-bezier(.16,1,.3,1);
+  }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+  .reveal-delay-1 { transition-delay: 0.1s; }
+  .reveal-delay-2 { transition-delay: 0.2s; }
+  .reveal-delay-3 { transition-delay: 0.3s; }
+  .reveal-delay-4 { transition-delay: 0.4s; }
+
+  /* ---- SCROLL INDICATOR ---- */
+  .scroll-indicator {
+    position: absolute; bottom: 48px; right: 48px;
+    display: flex; flex-direction: column; align-items: center; gap: 8px;
+    animation: fadeUp 1s 1.5s both;
+  }
+  .scroll-indicator span {
+    font-family: 'Josefin Sans', sans-serif;
+    font-size: 8px; letter-spacing: 0.3em; text-transform: uppercase;
+    color: var(--text-light); writing-mode: vertical-rl;
+  }
+  .scroll-line {
+    width: 1px; height: 60px;
+    background: linear-gradient(to bottom, var(--gold), transparent);
+    animation: scrollDrop 2s ease-in-out infinite;
+  }
+  @keyframes scrollDrop {
+    0% { transform: scaleY(0); transform-origin: top; }
+    50% { transform: scaleY(1); transform-origin: top; }
+    51% { transform: scaleY(1); transform-origin: bottom; }
+    100% { transform: scaleY(0); transform-origin: bottom; }
+  }
+</style>
+</head>
+<body>
+
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+
+<!-- NAVIGATION -->
+<nav id="nav">
+  <a href="#hero" class="nav-logo">Yuki Kono</a>
+  <ul class="nav-links">
+    <li><a href="#news">News</a></li>
+    <li><a href="#biography">Biography</a></li>
+    <li><a href="#events">Events</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#articles">Press</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-visual">
+    <div class="hero-pattern"></div>
+    <div class="hero-instrument">♩</div>
+    <div class="hero-tagline-jp">音楽は、語りかける</div>
+  </div>
+  <div class="hero-content">
+    <div class="hero-eyebrow">Bassoonist &amp; Concert Director</div>
+    <h1 class="hero-name">
+      Yuki<br>
+      <em>Kono</em>
+    </h1>
+    <div class="hero-kanji">河野 友紀</div>
+    <div class="hero-role">ファゴット奏者・コンサート演出家</div>
+    <p class="hero-message">
+      音楽は、言葉を超えて届く。<br>
+      ファゴットの響きと、空間を設計するまなざしで、<br>
+      聴く人の心に刻まれる時間を生み出します。
+    </p>
+    <div class="hero-cta">
+      <a href="#events" class="btn-primary">出演予定を見る</a>
+      <a href="#contact" class="btn-outline">お問い合わせ</a>
+    </div>
+    <div class="scroll-indicator">
+      <span>Scroll</span>
+      <div class="scroll-line"></div>
+    </div>
+  </div>
+</section>
+
+<!-- NEWS -->
+<section id="news">
+  <div class="container">
+    <div class="section-header reveal">
+      <span class="section-label">Latest</span>
+      <div class="section-line"></div>
+      <h2 class="section-title">News</h2>
+    </div>
+    <div class="news-grid" id="news-grid">
+      <div class="loading-placeholder">読み込み中...</div>
+    </div>
+  </div>
+</section>
+
+<!-- BIOGRAPHY -->
+<section id="biography">
+  <div class="container">
+    <div class="section-header reveal">
+      <span class="section-label">About</span>
+      <div class="section-line"></div>
+      <h2 class="section-title">Bio<em>graphy</em></h2>
+    </div>
+    <div class="bio-layout">
+      <div class="bio-portrait reveal">
+        <div class="bio-portrait-frame"></div>
+        <div class="bio-portrait-accent"></div>
+        <div class="bio-portrait-label">© Photo: Kenji Tanaka</div>
+      </div>
+      <div class="bio-text reveal reveal-delay-2">
+        <p>東京生まれ。5歳よりピアノを、12歳よりファゴットを始める。東京藝術大学を首席で卒業後、ウィーン国立音楽大学大学院に留学。在学中よりウィーン・フィルハーモニー管弦楽団メンバーによる室内楽グループと共演を重ねる。</p>
+        <p>帰国後は演奏活動と並行して、コンサートの企画・演出にも力を入れる。単なる"演奏会"にとどまらない、音楽・空間・物語が融合した体験型コンサートを多数プロデュースし、クラシック音楽の新たな聴衆層の開拓に貢献している。</p>
+        <p>NHK-FMへの出演、音楽誌への寄稿など、メディア出演も多数。また教育活動にも積極的に取り組み、国内外でのマスタークラスも好評を博している。</p>
+        <div class="bio-details">
+          <div class="bio-detail-item">
+            <div class="bio-detail-label">Studied at</div>
+            <div class="bio-detail-value">東京藝術大学<br>ウィーン国立音楽大学</div>
+          </div>
+          <div class="bio-detail-item">
+            <div class="bio-detail-label">Awards</div>
+            <div class="bio-detail-value">日本木管コンクール 第1位<br>ジュネーブ国際音楽コンクール 入賞</div>
+          </div>
+          <div class="bio-detail-item">
+            <div class="bio-detail-label">Specialty</div>
+            <div class="bio-detail-value">バロック／現代音楽<br>コンサート演出・プロデュース</div>
+          </div>
+          <div class="bio-detail-item">
+            <div class="bio-detail-label">Instrument</div>
+            <div class="bio-detail-value">ファゴット<br>Bassoon</div>
+          </div>
+          <div class="bio-detail-item">
+            <div class="bio-detail-label">Based in</div>
+            <div class="bio-detail-value">Tokyo, Japan</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EVENTS -->
+<section id="events">
+  <div class="container">
+    <div class="section-header reveal">
+      <span class="section-label">Schedule</span>
+      <div class="section-line"></div>
+      <h2 class="section-title"><em>Upcoming</em> Events</h2>
+    </div>
+    <div class="events-list" id="events-list">
+      <div class="loading-placeholder loading-dark">読み込み中...</div>
+    </div>
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section id="projects">
+  <div class="container">
+    <div class="section-header reveal">
+      <span class="section-label">Work</span>
+      <div class="section-line"></div>
+      <h2 class="section-title">Pro<em>jects</em></h2>
+    </div>
+    <div class="projects-grid" id="projects-grid">
+      <div class="loading-placeholder">読み込み中...</div>
+    </div>
+  </div>
+</section>
+
+<!-- ARTICLES -->
+<section id="articles">
+  <div class="container">
+    <div class="section-header reveal">
+      <span class="section-label">Press & Media</span>
+      <div class="section-line"></div>
+      <h2 class="section-title">Arti<em>cles</em></h2>
+    </div>
+    <div class="articles-list" id="articles-list">
+      <div class="loading-placeholder">読み込み中...</div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="container">
+    <div class="section-header reveal">
+      <span class="section-label">Get in Touch</span>
+      <div class="section-line"></div>
+      <h2 class="section-title"><em>Contact</em></h2>
+    </div>
+    <div class="contact-layout">
+      <div class="reveal">
+        <p class="contact-message">
+          コンサートへの<strong>出演依頼</strong>、コンサートの<strong>企画・演出</strong>のご相談、
+          <strong>メディア取材</strong>やレコーディングへのご依頼など、お気軽にお問い合わせください。<br><br>
+          いただいたメッセージは通常3営業日以内にご返信いたします。<br><br>
+          <strong>info@yukikono.com</strong>
+        </p>
+      </div>
+      <form class="contact-form reveal reveal-delay-2">
+        <div class="form-row">
+          <div class="form-group">
+            <label>お名前 / Name</label>
+            <input type="text" placeholder="山田 太郎">
+          </div>
+          <div class="form-group">
+            <label>メールアドレス / Email</label>
+            <input type="email" placeholder="example@email.com">
+          </div>
+        </div>
+        <div class="form-group">
+          <label>お問い合わせの種類</label>
+          <select>
+            <option value="">— 選択してください —</option>
+            <option>演奏依頼（ソロ）</option>
+            <option>演奏依頼（アンサンブル）</option>
+            <option>コンサート企画・演出のご相談</option>
+            <option>メディア取材・インタビュー</option>
+            <option>レコーディング</option>
+            <option>マスタークラス・ワークショップ</option>
+            <option>その他</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>メッセージ / Message</label>
+          <textarea placeholder="ご用件をお聞かせください…"></textarea>
+        </div>
+        <button type="submit" class="btn-submit">送信する — Send</button>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- SNS -->
+<section id="sns">
+  <div class="container">
+    <div class="section-header reveal">
+      <span class="section-label">Follow</span>
+      <div class="section-line"></div>
+      <h2 class="section-title">Social <em>Media</em></h2>
+    </div>
+    <div class="sns-grid">
+      <a href="#" class="sns-card reveal">
+        <div class="sns-icon">📸</div>
+        <div class="sns-name">Instagram</div>
+        <div class="sns-handle">@yuki_kono</div>
+        <div class="sns-desc">演奏の舞台裏、日々の練習風景、旅先からの音楽的な気づきを発信中。</div>
+      </a>
+      <a href="#" class="sns-card reveal reveal-delay-1">
+        <div class="sns-icon">🎵</div>
+        <div class="sns-name">YouTube</div>
+        <div class="sns-handle">Yuki Kono Official</div>
+        <div class="sns-desc">演奏動画、コンサートドキュメンタリー、楽曲解説など幅広くアップしています。</div>
+      </a>
+      <a href="#" class="sns-card reveal reveal-delay-2">
+        <div class="sns-icon">𝕏</div>
+        <div class="sns-name">X / Twitter</div>
+        <div class="sns-handle">@yuki_bassoon</div>
+        <div class="sns-desc">音楽について考えたこと、コンサート情報、業界ニュースへの感想など。</div>
+      </a>
+      <a href="#" class="sns-card reveal reveal-delay-3">
+        <div class="sns-icon">📝</div>
+        <div class="sns-name">Note</div>
+        <div class="sns-handle">yuki-kono</div>
+        <div class="sns-desc">音楽との向き合い方、演奏家として生きることなど、読み物としてのコンテンツを更新中。</div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <span class="footer-name">Yuki Kono</span>
+  <p>© 2025 Yuki Kono. All Rights Reserved.</p>
+</footer>
+
+<style>
+  /* ---- LOADING STATES ---- */
+  .loading-placeholder {
+    grid-column: 1 / -1;
+    padding: 48px; text-align: center;
+    font-family: 'Josefin Sans', sans-serif;
+    font-size: 10px; letter-spacing: 0.3em; text-transform: uppercase;
+    color: var(--rose); opacity: 0.6;
+    animation: pulse 1.5s ease-in-out infinite;
+  }
+  .loading-dark { color: var(--rose-pale); }
+  @keyframes pulse { 0%, 100% { opacity: 0.4; } 50% { opacity: 0.8; } }
+  .error-msg {
+    grid-column: 1 / -1; padding: 32px; text-align: center;
+    font-size: 13px; color: var(--rose); opacity: 0.7;
+  }
+</style>
+
+<script>
+// =============================================================
+//  ★ ここにGoogle Apps ScriptのURLを設定してください
+//  セットアップガイドのSTEP 2-3を参照
+// =============================================================
+const GAS_API_URL = 'YOUR_GAS_API_URL';
+// 例: 'https://script.google.com/macros/s/AKfy.../exec'
+
+// GASが未設定の場合はデモデータを表示
+const USE_DEMO = GAS_API_URL === 'YOUR_GAS_API_URL';
+
+// =============================================================
+//  デモデータ（GAS設定前のプレビュー用）
+// =============================================================
+const DEMO_DATA = {
+  news: [
+    { date: '2025.03.15', title: '新アルバム「息吹」リリース決定', body: 'バロックから現代曲まで、ファゴットの多様な表情を収めたソロアルバムが4月にリリースされます。レコーディングはウィーンにて行いました。' },
+    { date: '2025.02.28', title: '東京フィルハーモニーとの共演が決定', body: '6月の定期演奏会にソリストとして招聘されました。モーツァルトのファゴット協奏曲を演奏します。' },
+    { date: '2025.01.20', title: '国際音楽祭に日本代表として招待', body: 'ウィーン国際音楽祭より招聘を受け、7月に現地でリサイタルを開催することが決定しました。' },
+  ],
+  events: [
+    { month: 'Apr 2025', day: '12', title: '河野友紀 ファゴットリサイタル 〜息吹〜', description: '新アルバム「息吹」リリース記念公演。バッハ、テレマン、そして世界初演作品を含む意欲的なプログラム。', venue: '東京オペラシティ コンサートホール' },
+    { month: 'Jun 2025', day: '08', title: '東京フィルハーモニー交響楽団 第1000回定期演奏会', description: 'モーツァルト：ファゴット協奏曲 変ロ長調 K.191 / 指揮：山田一雄', venue: 'サントリーホール 大ホール' },
+    { month: 'Jul 2025', day: '19', title: 'Vienna International Music Festival — Solo Recital', description: 'Works by Schumann, Britten, and a world premiere by Misato Mochizuki.', venue: 'Konzerthaus Wien, Austria' },
+    { month: 'Sep 2025', day: '27', title: '〈演出〉音と光の夜 —— 現代音楽の夕べ', description: 'コンサート演出を担当。照明・映像と音楽が溶け合う体験型パフォーマンス。', venue: 'Bunkamura オーチャードホール' },
+  ],
+  projects: [
+    { tag: 'Concert Series', title: '「月夜の音楽会」シリーズ', description: '古民家や蔵をステージに、月明かりのもとで行うコンサートシリーズ。2019年より年2回開催。毎回完売が続く人気企画。' },
+    { tag: 'Education', title: '若手演奏家育成プロジェクト「SPROUT」', description: '音大生・若手プロ奏者を対象とした、演奏技術と音楽プロデュース力を同時に育むプログラム。' },
+    { tag: 'Cross-genre', title: '映画音楽プロジェクト「Cinéma Sonore」', description: '無声映画に生演奏で音楽をつけるシリーズ。クラシック、ジャズ、現代音楽の奏者が集い、毎回異なる表情を見せる。' },
+    { tag: 'Recording', title: 'ソロアルバム制作「息吹」', description: 'バッハからビゼー、さらに現代日本人作曲家の新作まで、ファゴットの声域を余すことなく捉えた初のソロアルバム。2025年4月リリース。' },
+  ],
+  articles: [
+    { media: '音楽の友 2025.02', title: '「ファゴットは語る ——河野友紀インタビュー」', url: '#' },
+    { media: 'レコード芸術 2025.01', title: '新録音レビュー：音楽の確かな個性が光る演奏', url: '#' },
+    { media: 'NHK-FM 2024.12', title: '「クラシック音楽館」出演：バロック・ファゴットの世界', url: '#' },
+    { media: '朝日新聞 2024.10', title: 'クラシックの新地平：空間と音楽を融合させるアーティスト', url: '#' },
+    { media: 'Gramophone JP 2024.08', title: 'Five Rising Stars of Japanese Classical Music', url: '#' },
+  ],
+};
+
+// =============================================================
+//  データ取得
+// =============================================================
+async function fetchSheet(sheetName) {
+  if (USE_DEMO) return DEMO_DATA[sheetName] || [];
+  const res = await fetch(`${GAS_API_URL}?sheet=${sheetName}`);
+  if (!res.ok) throw new Error(`HTTP ${res.status}`);
+  return res.json();
+}
+
+// =============================================================
+//  レンダリング
+// =============================================================
+function renderNews(data) {
+  const el = document.getElementById('news-grid');
+  if (!data.length) { el.innerHTML = '<div class="error-msg">現在ニュースはありません</div>'; return; }
+  el.innerHTML = data.map((item, i) => `
+    <div class="news-card reveal reveal-delay-${i % 3 + 1}">
+      <div class="news-date">${item.date || ''}</div>
+      <h3>${item.title || ''}</h3>
+      <p>${item.body || ''}</p>
+    </div>
+  `).join('');
+  activateReveal();
+}
+
+function renderEvents(data) {
+  const el = document.getElementById('events-list');
+  if (!data.length) { el.innerHTML = '<div class="error-msg loading-dark">現在予定されているイベントはありません</div>'; return; }
+  el.innerHTML = data.map((item, i) => `
+    <div class="event-item reveal reveal-delay-${i % 4}">
+      <div class="event-date-block">
+        <div class="event-month">${item.month || ''}</div>
+        <div class="event-day">${item.day || ''}</div>
+      </div>
+      <div class="event-info">
+        <h3>${item.title || ''}</h3>
+        <p>${item.description || ''}</p>
+      </div>
+      <div class="event-venue">${(item.venue || '').replace(/\s/, '<br>')}</div>
+    </div>
+  `).join('');
+  activateReveal();
+}
+
+function renderProjects(data) {
+  const el = document.getElementById('projects-grid');
+  if (!data.length) { el.innerHTML = '<div class="error-msg">現在プロジェクト情報はありません</div>'; return; }
+  el.innerHTML = data.map((item, i) => `
+    <div class="project-card reveal reveal-delay-${i % 4}">
+      <div class="project-number">${String(i + 1).padStart(2, '0')}</div>
+      <span class="project-tag">${item.tag || ''}</span>
+      <h3>${item.title || ''}</h3>
+      <p>${item.description || ''}</p>
+    </div>
+  `).join('');
+  activateReveal();
+}
+
+function renderArticles(data) {
+  const el = document.getElementById('articles-list');
+  if (!data.length) { el.innerHTML = '<div class="error-msg">現在記事情報はありません</div>'; return; }
+  el.innerHTML = data.map((item, i) => `
+    <a href="${item.url || '#'}" class="article-item reveal reveal-delay-${i % 5}" target="_blank" rel="noopener">
+      <span class="article-num">${String(i + 1).padStart(2, '0')}</span>
+      <span class="article-meta">${item.media || ''}</span>
+      <span class="article-title">${item.title || ''}</span>
+      <span class="article-arrow">→</span>
+    </a>
+  `).join('');
+  activateReveal();
+}
+
+// =============================================================
+//  スクロールアニメーション再適用
+// =============================================================
+function activateReveal() {
+  document.querySelectorAll('.reveal:not(.visible)').forEach(el => observer.observe(el));
+}
+
+// =============================================================
+//  初期化
+// =============================================================
+async function initDynamicSections() {
+  const sections = [
+    { fn: renderNews,     sheet: 'news'     },
+    { fn: renderEvents,   sheet: 'events'   },
+    { fn: renderProjects, sheet: 'projects' },
+    { fn: renderArticles, sheet: 'articles' },
+  ];
+
+  await Promise.allSettled(sections.map(async ({ fn, sheet }) => {
+    try {
+      const data = await fetchSheet(sheet);
+      fn(Array.isArray(data) ? data : []);
+    } catch (err) {
+      console.warn(`Failed to load ${sheet}:`, err);
+    }
+  }));
+}
+
+// =============================================================
+//  カスタムカーソル
+// =============================================================
+const cursor = document.getElementById('cursor');
+const ring = document.getElementById('cursorRing');
+let mx = 0, my = 0, rx = 0, ry = 0;
+
+document.addEventListener('mousemove', e => {
+  mx = e.clientX; my = e.clientY;
+  cursor.style.left = mx + 'px';
+  cursor.style.top = my + 'px';
+});
+
+function animRing() {
+  rx += (mx - rx) * 0.12;
+  ry += (my - ry) * 0.12;
+  ring.style.left = rx + 'px';
+  ring.style.top = ry + 'px';
+  requestAnimationFrame(animRing);
+}
+animRing();
+
+// =============================================================
+//  ナビ スクロール
+// =============================================================
+const nav = document.getElementById('nav');
+window.addEventListener('scroll', () => {
+  nav.classList.toggle('scrolled', window.scrollY > 60);
+});
+
+// =============================================================
+//  スクロールリビール
+// =============================================================
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) { e.target.classList.add('visible'); }
+  });
+}, { threshold: 0.1 });
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+// =============================================================
+//  フォーム送信（デモ）
+// =============================================================
+document.querySelector('form').addEventListener('submit', e => {
+  e.preventDefault();
+  const btn = e.target.querySelector('.btn-submit');
+  btn.textContent = '送信しました — Sent ✓';
+  btn.style.background = '#8B2E3F';
+  btn.style.color = '#F7F0E8';
+});
+
+// =============================================================
+//  起動
+// =============================================================
+initDynamicSections();
+</script></body>
+</html>
